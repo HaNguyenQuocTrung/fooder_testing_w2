@@ -161,14 +161,63 @@
     <script>
       let ingredientCount = 1;
       let instructionCount = 1;
+      let editingRecipeId = null;
 
-      function addIngredient() {
+      // Check if we're editing an existing recipe
+      function checkEditMode() {
+        const urlParams = new URLSearchParams(window.location.search);
+        editingRecipeId = urlParams.get("edit");
+
+        if (editingRecipeId) {
+          loadRecipeForEdit(editingRecipeId);
+          document.querySelector("header h1").textContent = "✏️ Edit Recipe";
+          document.querySelector("header p").textContent = "Update your recipe";
+          document.querySelector(".save-btn").textContent = "💾 Update Recipe";
+        }
+      }
+
+      // Load recipe data for editing
+      function loadRecipeForEdit(recipeId) {
+        const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+        const recipe = recipes.find((r) => r.id === recipeId);
+
+        if (recipe) {
+          document.getElementById("recipeName").value = recipe.name || "";
+          document.getElementById("recipeCategory").value =
+            recipe.category || "";
+          document.getElementById("recipeDescription").value =
+            recipe.description || "";
+          document.getElementById("prepTime").value = recipe.prepTime || "";
+          document.getElementById("servings").value = recipe.servings || "";
+
+          // Load ingredients
+          if (recipe.ingredients && recipe.ingredients.length > 0) {
+            const ingredientsList = document.getElementById("ingredientsList");
+            ingredientsList.innerHTML = "";
+            recipe.ingredients.forEach((ingredient, index) => {
+              addIngredient(ingredient);
+            });
+          }
+
+          // Load instructions
+          if (recipe.instructions && recipe.instructions.length > 0) {
+            const instructionsList =
+              document.getElementById("instructionsList");
+            instructionsList.innerHTML = "";
+            recipe.instructions.forEach((instruction, index) => {
+              addInstruction(instruction);
+            });
+          }
+        }
+      }
+
+      function addIngredient(value = "") {
         ingredientCount++;
         const ingredientsList = document.getElementById("ingredientsList");
         const newIngredient = document.createElement("div");
         newIngredient.className = "ingredient-item";
         newIngredient.innerHTML = `
-    <input type="text" placeholder="Ingredient ${ingredientCount}" class="ingredient-input">
+    <input type="text" placeholder="Ingredient ${ingredientCount}" class="ingredient-input" value="${value}">
     <button type="button" class="remove-btn" onclick="removeIngredient(this)">✕</button>
   `;
         ingredientsList.appendChild(newIngredient);
@@ -190,14 +239,14 @@
         ingredientCount = ingredientInputs.length;
       }
 
-      function addInstruction() {
+      function addInstruction(value = "") {
         instructionCount++;
         const instructionsList = document.getElementById("instructionsList");
         const newInstruction = document.createElement("div");
         newInstruction.className = "instruction-item";
         newInstruction.innerHTML = `
     <span class="step-number">${instructionCount}</span>
-    <textarea placeholder="Step ${instructionCount}" class="instruction-input"></textarea>
+    <textarea placeholder="Step ${instructionCount}" class="instruction-input">${value}</textarea>
     <button type="button" class="remove-btn" onclick="removeInstruction(this)">✕</button>
   `;
         instructionsList.appendChild(newInstruction);
@@ -230,6 +279,7 @@
 
           // Collect form data
           const formData = {
+            id: editingRecipeId || "recipe_" + Date.now(),
             name: document.getElementById("recipeName").value,
             category: document.getElementById("recipeCategory").value,
             description: document.getElementById("recipeDescription").value,
@@ -245,15 +295,35 @@
             )
               .map((input) => input.value)
               .filter((value) => value.trim() !== ""),
+            rating: 0,
+            createdAt: editingRecipeId
+              ? new Date().toISOString()
+              : new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           };
 
-          // Save to localStorage (in a real app, this would go to a server)
+          // Get existing recipes
           const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
-          recipes.push(formData);
-          localStorage.setItem("recipes", JSON.stringify(recipes));
 
-          // Show success message
-          alert("Recipe saved successfully! 🎉");
+          if (editingRecipeId) {
+            // Update existing recipe
+            const index = recipes.findIndex((r) => r.id === editingRecipeId);
+            if (index !== -1) {
+              recipes[index] = {
+                ...recipes[index],
+                ...formData,
+                updatedAt: new Date().toISOString(),
+              };
+            }
+            alert("Recipe updated successfully! 🎉");
+          } else {
+            // Add new recipe
+            recipes.push(formData);
+            alert("Recipe saved successfully! 🎉");
+          }
+
+          // Save to localStorage
+          localStorage.setItem("recipes", JSON.stringify(recipes));
 
           // Redirect to appropriate category page
           const categoryPages = {
@@ -265,6 +335,9 @@
           const redirectPage = categoryPages[formData.category] || "index.html";
           window.location.href = redirectPage;
         });
+
+      // Initialize edit mode on page load
+      window.addEventListener("load", checkEditMode);
     </script>
   </body>
 </html>

@@ -158,30 +158,67 @@
       // Display all recipes
       function displayAllRecipes() {
         const recipeGrid = document.querySelector(".recipe-grid");
-        displayRecipes(breakfastRecipes, recipeGrid);
+        displayRecipes([], recipeGrid);
       }
 
       // Display recipes in grid
       function displayRecipes(recipesToDisplay, container) {
-        container.innerHTML = recipesToDisplay
-          .map(
-            (recipe) => `
-    <div class="recipe-card">
-      <div class="recipe-image">${recipe.emoji}</div>
-      <div class="recipe-info">
-        <h3>${recipe.name}</h3>
-        <div class="recipe-meta-inline">
-          <span class="difficulty ${recipe.difficulty}">${recipe.difficulty}</span>
-          <span class="rating">${"⭐".repeat(recipe.rating)}</span>
-          <span class="time">${recipe.time}</span>
-        </div>
-        <p>${recipe.description}</p>
-        <a href="${recipe.url}">View Recipe</a>
-      </div>
-    </div>
-  `,
-          )
+        const allRecipes = [...breakfastRecipes, ...getUserRecipes()];
+        const filteredRecipes = recipesToDisplay.length
+          ? recipesToDisplay
+          : allRecipes.filter((r) => r.category === "breakfast");
+
+        container.innerHTML = filteredRecipes
+          .map((recipe) => {
+            const isUserRecipe = recipe.id && recipe.id.startsWith("recipe_");
+            return `
+            <div class="recipe-card">
+              <div class="recipe-image">${recipe.emoji || "🍳"}</div>
+              <div class="recipe-info">
+                <h3>${recipe.name}</h3>
+                <div class="recipe-meta-inline">
+                  <span class="difficulty ${recipe.difficulty || "easy"}">${recipe.difficulty || "Easy"}</span>
+                  <span class="rating">${"⭐".repeat(recipe.rating || 4)}</span>
+                  <span class="time">${recipe.prepTime || "15 mins"}</span>
+                </div>
+                <p>${recipe.description}</p>
+                <div class="recipe-actions">
+                  ${
+                    isUserRecipe
+                      ? `
+                    <button class="edit-btn" onclick="editUserRecipe('${recipe.id}')">✏️ Edit</button>
+                    <button class="delete-btn" onclick="deleteUserRecipe('${recipe.id}')">🗑️ Delete</button>
+                  `
+                      : ""
+                  }
+                  <a href="${recipe.url}" class="view-btn">👁️ View Recipe</a>
+                </div>
+              </div>
+            </div>
+          `;
+          })
           .join("");
+      }
+
+      // Get user recipes from localStorage
+      function getUserRecipes() {
+        return JSON.parse(localStorage.getItem("recipes") || "[]");
+      }
+
+      // Edit user recipe
+      function editUserRecipe(recipeId) {
+        window.location.href = `add.html?edit=${recipeId}`;
+      }
+
+      // Delete user recipe
+      function deleteUserRecipe(recipeId) {
+        if (confirm("Are you sure you want to delete this recipe?")) {
+          const recipes = getUserRecipes();
+          const updatedRecipes = recipes.filter((r) => r.id !== recipeId);
+          localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+          displayAllRecipes();
+          alert("Recipe deleted successfully! 🗑️");
+        }
       }
 
       // Search on Enter key

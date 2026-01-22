@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Detail - Trung_cooKING</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="recipeTitle">📖 Recipe</h1>
+    </header>
+
+    <section class="content">
+      <div class="recipe-header">
+        <div class="recipe-meta">
+          <span id="recipeTime" class="meta-item">⏱️ -- mins</span>
+          <span id="recipeServings" class="meta-item">👥 -- servings</span>
+          <span id="recipeDifficulty" class="meta-item">📊 --</span>
+        </div>
+        <div class="recipe-actions">
+          <button id="editBtn" class="edit-btn" onclick="editRecipe()">
+            ✏️ Edit
+          </button>
+          <button id="deleteBtn" class="delete-btn" onclick="deleteRecipe()">
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
+
+      <div id="recipeDescription" class="recipe-description"></div>
+
+      <h2>Ingredients</h2>
+      <ul id="ingredientsList"></ul>
+
+      <h2>Instructions</h2>
+      <ol id="instructionsList"></ol>
+
+      <div class="recipe-tips">
+        <h3>💡 Cooking Tips</h3>
+        <ul>
+          <li>Read the entire recipe before starting to cook</li>
+          <li>Prep all ingredients before you begin cooking</li>
+          <li>Taste and adjust seasoning as you go</li>
+          <li>Don't be afraid to experiment with spices and herbs</li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="bottom-nav">
+      <a href="breakfast.html">
+        <span class="nav-icon">🍳</span>
+        <span>Breakfast</span>
+      </a>
+      <a href="lunch.html">
+        <span class="nav-icon">🥪</span>
+        <span>Lunch</span>
+      </a>
+      <a href="index.html">
+        <span class="nav-icon home-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="dinner.html">
+        <span class="nav-icon">🍝</span>
+        <span>Dinner</span>
+      </a>
+      <a href="add.html">
+        <span class="nav-icon">➕</span>
+        <span>Add</span>
+      </a>
+    </nav>
+
+    <script>
+      let currentRecipe = null;
+
+      // Load recipe from URL parameter or localStorage
+      function loadRecipe() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get("id");
+
+        if (recipeId) {
+          // Load from localStorage
+          const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+          currentRecipe = recipes.find((r) => r.id === recipeId);
+
+          if (currentRecipe) {
+            displayRecipe(currentRecipe);
+          } else {
+            showError("Recipe not found");
+          }
+        } else {
+          showError("No recipe ID provided");
+        }
+      }
+
+      // Display recipe details
+      function displayRecipe(recipe) {
+        // Update header
+        document.getElementById("recipeTitle").textContent =
+          `📖 ${recipe.name}`;
+
+        // Update meta information
+        document.getElementById("recipeTime").textContent =
+          `⏱️ ${recipe.prepTime || "-- mins"}`;
+        document.getElementById("recipeServings").textContent =
+          `👥 ${recipe.servings || "-- servings"}`;
+        document.getElementById("recipeDifficulty").textContent =
+          `📊 ${recipe.difficulty || "Easy"}`;
+
+        // Update description
+        const descElement = document.getElementById("recipeDescription");
+        if (recipe.description) {
+          descElement.innerHTML = `<p>${recipe.description}</p>`;
+          descElement.style.display = "block";
+        } else {
+          descElement.style.display = "none";
+        }
+
+        // Update ingredients
+        const ingredientsList = document.getElementById("ingredientsList");
+        ingredientsList.innerHTML = "";
+        if (recipe.ingredients && recipe.ingredients.length > 0) {
+          recipe.ingredients.forEach((ingredient) => {
+            const li = document.createElement("li");
+            li.textContent = ingredient;
+            ingredientsList.appendChild(li);
+          });
+        }
+
+        // Update instructions
+        const instructionsList = document.getElementById("instructionsList");
+        instructionsList.innerHTML = "";
+        if (recipe.instructions && recipe.instructions.length > 0) {
+          recipe.instructions.forEach((instruction) => {
+            const li = document.createElement("li");
+            li.textContent = instruction;
+            instructionsList.appendChild(li);
+          });
+        }
+      }
+
+      // Edit recipe
+      function editRecipe() {
+        if (currentRecipe) {
+          window.location.href = `add.html?edit=${currentRecipe.id}`;
+        }
+      }
+
+      // Delete recipe
+      function deleteRecipe() {
+        if (
+          currentRecipe &&
+          confirm(`Are you sure you want to delete "${currentRecipe.name}"?`)
+        ) {
+          const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+          const updatedRecipes = recipes.filter(
+            (r) => r.id !== currentRecipe.id,
+          );
+          localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+
+          alert("Recipe deleted successfully! 🗑️");
+
+          // Redirect to category page
+          const categoryPages = {
+            breakfast: "breakfast.html",
+            lunch: "lunch.html",
+            dinner: "dinner.html",
+          };
+
+          const redirectPage =
+            categoryPages[currentRecipe.category] || "index.html";
+          window.location.href = redirectPage;
+        }
+      }
+
+      // Show error message
+      function showError(message) {
+        document.querySelector(".content").innerHTML = `
+    <div class="error-message">
+      <h2>❌ ${message}</h2>
+      <p>Please check the recipe link and try again.</p>
+      <a href="index.html" class="back-btn">🏠 Back to Home</a>
+    </div>
+  `;
+      }
+
+      // Load recipe on page load
+      window.addEventListener("load", loadRecipe);
+    </script>
+  </body>
+</html>
