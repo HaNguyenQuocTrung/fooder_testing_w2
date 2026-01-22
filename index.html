@@ -1,59 +1,73 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Trung_cooKING</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trung_cooKING</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🍽️ Trung_cooKING</h1>
+      <p>Your personal cooking assistant</p>
+    </header>
 
-<header>
-  <h1>🍽️ Trung_cooKING</h1>
-  <p>Your personal cooking assistant</p>
-</header>
+    <section class="content">
+      <h2 class="section-title">Choose a meal</h2>
 
-<nav>
-  <a href="breakfast.html">Breakfast</a>
-  <a href="lunch.html">Lunch</a>
-  <a href="dinner.html">Dinner</a>
-</nav>
+      <div class="home-grid">
+        <div class="home-card">
+          <span>🍳</span>
+          <a href="breakfast.html">Breakfast</a>
+        </div>
 
-<section class="content">
+        <div class="home-card">
+          <span>🥪</span>
+          <a href="lunch.html">Lunch</a>
+        </div>
 
-  <h2 class="section-title">Choose a meal</h2>
+        <div class="home-card">
+          <span>🍝</span>
+          <a href="dinner.html">Dinner</a>
+        </div>
+      </div>
 
-  <div class="home-grid">
-    <div class="home-card">
-      <span>🍳</span>
-      <a href="breakfast.html">Breakfast</a>
-    </div>
+      <h2 class="section-title">Popular Recipes</h2>
 
-    <div class="home-card">
-      <span>🥪</span>
-      <a href="lunch.html">Lunch</a>
-    </div>
+      <div class="card">
+        <h3>Pancakes</h3>
+        <p>Fluffy breakfast favourite</p>
+        <a href="pancake.html">View Recipe</a>
+      </div>
 
-    <div class="home-card">
-      <span>🍝</span>
-      <a href="dinner.html">Dinner</a>
-    </div>
-  </div>
+      <div class="card">
+        <h3>Chicken Salad</h3>
+        <p>Healthy and light lunch</p>
+        <a href="salad.html">View Recipe</a>
+      </div>
+    </section>
 
-  <h2 class="section-title">Popular Recipes</h2>
-
-  <div class="card">
-    <h3>Pancakes</h3>
-    <p>Fluffy breakfast favourite</p>
-    <a href="pancake.html">View Recipe</a>
-  </div>
-
-  <div class="card">
-    <h3>Chicken Salad</h3>
-    <p>Healthy and light lunch</p>
-    <a href="salad.html">View Recipe</a>
-  </div>
-
-</section>
-
-</body>
+    <nav class="bottom-nav">
+      <a href="breakfast.html">
+        <span class="nav-icon">🍳</span>
+        <span>Breakfast</span>
+      </a>
+      <a href="lunch.html">
+        <span class="nav-icon">🥪</span>
+        <span>Lunch</span>
+      </a>
+      <a href="index.html" class="active">
+        <span class="nav-icon home-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="dinner.html">
+        <span class="nav-icon">🍝</span>
+        <span>Dinner</span>
+      </a>
+      <a href="#">
+        <span class="nav-icon">➕</span>
+        <span>Add</span>
+      </a>
+    </nav>
+  </body>
 </html>

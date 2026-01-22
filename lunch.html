@@ -1,38 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Dinner - Trung_cooKING</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lunch - Trung_cooKING</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🥪 Lunch</h1>
+      <p>Simple and satisfying meals</p>
+    </header>
 
-<header>
-  <h1>🍝 Dinner</h1>
-  <p>Relax and enjoy your evening meal</p>
-</header>
+    <section class="content">
+      <div class="card">
+        <h3>Chicken Salad</h3>
+        <p>Healthy and fresh lunch</p>
+        <a href="salad.html">View Recipe</a>
+      </div>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="breakfast.html">Breakfast</a>
-  <a href="lunch.html">Lunch</a>
-</nav>
+      <div class="card">
+        <h3>Sandwich</h3>
+        <p>Quick lunch on the go</p>
+        <a href="sandwich.html">View Recipe</a>
+      </div>
+    </section>
 
-<section class="content">
-
-  <div class="card">
-    <h3>Pasta</h3>
-    <p>Classic Italian pasta</p>
-    <a href="pasta.html">View Recipe</a>
-  </div>
-
-  <div class="card">
-    <h3>Grilled Chicken</h3>
-    <p>Protein-rich dinner</p>
-    <a href="chicken.html">View Recipe</a>
-  </div>
-
-</section>
-
-</body>
+    <nav class="bottom-nav">
+      <a href="breakfast.html">
+        <span class="nav-icon">🍳</span>
+        <span>Breakfast</span>
+      </a>
+      <a href="lunch.html" class="active">
+        <span class="nav-icon">🥪</span>
+        <span>Lunch</span>
+      </a>
+      <a href="index.html">
+        <span class="nav-icon home-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="dinner.html">
+        <span class="nav-icon">🍝</span>
+        <span>Dinner</span>
+      </a>
+      <a href="#">
+        <span class="nav-icon">➕</span>
+        <span>Add</span>
+      </a>
+    </nav>
+  </body>
 </html>
