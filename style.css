@@ -316,21 +316,172 @@ li {
 }
 
 /* =========================
-   VERY SMALL SCREENS
+   ADD RECIPE FORM
 ========================= */
-@media (max-width: 320px) {
-  .home-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff7a18;
+  box-shadow: 0 0 0 3px rgba(255, 122, 24, 0.1);
+}
+
+.ingredient-item,
+.instruction-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ingredient-input,
+.instruction-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+  background: #ffffff;
+}
+
+.step-number {
+  background: #ff7a18;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.remove-btn {
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+}
+
+.add-ingredient-btn,
+.add-instruction-btn {
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  margin-top: 8px;
+}
+
+.add-ingredient-btn:hover,
+.add-instruction-btn:hover {
+  background: #059669;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 12px;
+  margin-bottom: 8px;
+}
+
+.save-btn {
+  background: #ff7a18;
+  color: #ffffff;
+}
+
+.save-btn:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+}
+
+.cancel-btn {
+  background: #6b7280;
+  color: #ffffff;
+}
+
+.cancel-btn:hover {
+  background: #4b5563;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   MOBILE FORM ADJUSTMENTS
+========================= */
+@media (max-width: 480px) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea,
+  .ingredient-input,
+  .instruction-input {
+    padding: 8px 10px;
+    font-size: 0.85rem;
   }
 
-  nav {
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  nav a {
+  .step-number,
+  .remove-btn {
+    width: 24px;
+    height: 24px;
     font-size: 0.75rem;
-    padding: 4px 6px;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
   }
 }

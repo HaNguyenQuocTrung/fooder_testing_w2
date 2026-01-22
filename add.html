@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Recipe - Trung_cooKING</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>➕ Add New Recipe</h1>
+      <p>Create your own delicious recipe</p>
+    </header>
+
+    <section class="content">
+      <div class="card">
+        <h3>Recipe Information</h3>
+        <form id="recipeForm">
+          <div class="form-group">
+            <label for="recipeName">Recipe Name</label>
+            <input
+              type="text"
+              id="recipeName"
+              name="recipeName"
+              placeholder="Enter recipe name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="recipeCategory">Category</label>
+            <select id="recipeCategory" name="recipeCategory" required>
+              <option value="">Select category</option>
+              <option value="breakfast">🍳 Breakfast</option>
+              <option value="lunch">🥪 Lunch</option>
+              <option value="dinner">🍝 Dinner</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="recipeDescription">Description</label>
+            <textarea
+              id="recipeDescription"
+              name="recipeDescription"
+              placeholder="Brief description of your recipe"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="prepTime">Prep Time</label>
+            <input
+              type="text"
+              id="prepTime"
+              name="prepTime"
+              placeholder="e.g., 15 mins"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="servings">Servings</label>
+            <input
+              type="number"
+              id="servings"
+              name="servings"
+              placeholder="Number of servings"
+              min="1"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Ingredients</h3>
+        <div id="ingredientsList">
+          <div class="ingredient-item">
+            <input
+              type="text"
+              placeholder="Ingredient 1"
+              class="ingredient-input"
+            />
+            <button
+              type="button"
+              class="remove-btn"
+              onclick="removeIngredient(this)"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="add-ingredient-btn"
+          onclick="addIngredient()"
+        >
+          + Add Ingredient
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>Instructions</h3>
+        <div id="instructionsList">
+          <div class="instruction-item">
+            <span class="step-number">1</span>
+            <textarea placeholder="Step 1" class="instruction-input"></textarea>
+            <button
+              type="button"
+              class="remove-btn"
+              onclick="removeInstruction(this)"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="add-instruction-btn"
+          onclick="addInstruction()"
+        >
+          + Add Step
+        </button>
+      </div>
+
+      <div class="card">
+        <button type="submit" form="recipeForm" class="save-btn">
+          💾 Save Recipe
+        </button>
+        <button
+          type="button"
+          class="cancel-btn"
+          onclick="window.location.href = 'index.html'"
+        >
+          Cancel
+        </button>
+      </div>
+    </section>
+
+    <nav class="bottom-nav">
+      <a href="breakfast.html">
+        <span class="nav-icon">🍳</span>
+        <span>Breakfast</span>
+      </a>
+      <a href="lunch.html">
+        <span class="nav-icon">🥪</span>
+        <span>Lunch</span>
+      </a>
+      <a href="index.html">
+        <span class="nav-icon home-icon">🏠</span>
+        <span>Home</span>
+      </a>
+      <a href="dinner.html">
+        <span class="nav-icon">🍝</span>
+        <span>Dinner</span>
+      </a>
+      <a href="add.html" class="active">
+        <span class="nav-icon">➕</span>
+        <span>Add</span>
+      </a>
+    </nav>
+
+    <script>
+      let ingredientCount = 1;
+      let instructionCount = 1;
+
+      function addIngredient() {
+        ingredientCount++;
+        const ingredientsList = document.getElementById("ingredientsList");
+        const newIngredient = document.createElement("div");
+        newIngredient.className = "ingredient-item";
+        newIngredient.innerHTML = `
+    <input type="text" placeholder="Ingredient ${ingredientCount}" class="ingredient-input">
+    <button type="button" class="remove-btn" onclick="removeIngredient(this)">✕</button>
+  `;
+        ingredientsList.appendChild(newIngredient);
+      }
+
+      function removeIngredient(button) {
+        const ingredientItems = document.querySelectorAll(".ingredient-item");
+        if (ingredientItems.length > 1) {
+          button.parentElement.remove();
+          updateIngredientPlaceholders();
+        }
+      }
+
+      function updateIngredientPlaceholders() {
+        const ingredientInputs = document.querySelectorAll(".ingredient-input");
+        ingredientInputs.forEach((input, index) => {
+          input.placeholder = `Ingredient ${index + 1}`;
+        });
+        ingredientCount = ingredientInputs.length;
+      }
+
+      function addInstruction() {
+        instructionCount++;
+        const instructionsList = document.getElementById("instructionsList");
+        const newInstruction = document.createElement("div");
+        newInstruction.className = "instruction-item";
+        newInstruction.innerHTML = `
+    <span class="step-number">${instructionCount}</span>
+    <textarea placeholder="Step ${instructionCount}" class="instruction-input"></textarea>
+    <button type="button" class="remove-btn" onclick="removeInstruction(this)">✕</button>
+  `;
+        instructionsList.appendChild(newInstruction);
+      }
+
+      function removeInstruction(button) {
+        const instructionItems = document.querySelectorAll(".instruction-item");
+        if (instructionItems.length > 1) {
+          button.parentElement.remove();
+          updateInstructionNumbers();
+        }
+      }
+
+      function updateInstructionNumbers() {
+        const instructionItems = document.querySelectorAll(".instruction-item");
+        instructionItems.forEach((item, index) => {
+          const stepNumber = item.querySelector(".step-number");
+          const instructionInput = item.querySelector(".instruction-input");
+          stepNumber.textContent = index + 1;
+          instructionInput.placeholder = `Step ${index + 1}`;
+        });
+        instructionCount = instructionItems.length;
+      }
+
+      // Handle form submission
+      document
+        .getElementById("recipeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Collect form data
+          const formData = {
+            name: document.getElementById("recipeName").value,
+            category: document.getElementById("recipeCategory").value,
+            description: document.getElementById("recipeDescription").value,
+            prepTime: document.getElementById("prepTime").value,
+            servings: document.getElementById("servings").value,
+            ingredients: Array.from(
+              document.querySelectorAll(".ingredient-input"),
+            )
+              .map((input) => input.value)
+              .filter((value) => value.trim() !== ""),
+            instructions: Array.from(
+              document.querySelectorAll(".instruction-input"),
+            )
+              .map((input) => input.value)
+              .filter((value) => value.trim() !== ""),
+          };
+
+          // Save to localStorage (in a real app, this would go to a server)
+          const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+          recipes.push(formData);
+          localStorage.setItem("recipes", JSON.stringify(recipes));
+
+          // Show success message
+          alert("Recipe saved successfully! 🎉");
+
+          // Redirect to appropriate category page
+          const categoryPages = {
+            breakfast: "breakfast.html",
+            lunch: "lunch.html",
+            dinner: "dinner.html",
+          };
+
+          const redirectPage = categoryPages[formData.category] || "index.html";
+          window.location.href = redirectPage;
+        });
+    </script>
+  </body>
+</html>
