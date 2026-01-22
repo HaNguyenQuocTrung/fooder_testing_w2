@@ -13,37 +13,145 @@
     </header>
 
     <section class="content">
-      <h2 class="section-title">Choose a meal</h2>
+      <div class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search for recipes..."
+            class="search-input"
+          />
+          <button class="search-btn" onclick="searchRecipes()">Search</button>
+        </div>
+      </div>
 
-      <div class="home-grid">
-        <div class="home-card">
-          <span>🍳</span>
-          <a href="breakfast.html">Breakfast</a>
+      <h2 class="section-title">All Recipes</h2>
+
+      <div class="recipe-grid">
+        <div class="recipe-card">
+          <div class="recipe-image">🥞</div>
+          <div class="recipe-info">
+            <h3>Fluffy Pancakes</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="time">15 mins</span>
+            </div>
+            <p>
+              Classic fluffy breakfast pancakes perfect for weekend mornings
+            </p>
+            <a href="pancake.html">View Recipe</a>
+          </div>
         </div>
 
-        <div class="home-card">
-          <span>🥪</span>
-          <a href="lunch.html">Lunch</a>
+        <div class="recipe-card">
+          <div class="recipe-image">🥗</div>
+          <div class="recipe-info">
+            <h3>Chicken Salad</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="time">20 mins</span>
+            </div>
+            <p>
+              Fresh and healthy salad with grilled chicken and homemade dressing
+            </p>
+            <a href="salad.html">View Recipe</a>
+          </div>
         </div>
 
-        <div class="home-card">
-          <span>🍝</span>
-          <a href="dinner.html">Dinner</a>
+        <div class="recipe-card">
+          <div class="recipe-image">🍳</div>
+          <div class="recipe-info">
+            <h3>Classic Omelette</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="time">10 mins</span>
+            </div>
+            <p>Fluffy French-style omelette with your favorite fillings</p>
+            <a href="omelette.html">View Recipe</a>
+          </div>
+        </div>
+
+        <div class="recipe-card">
+          <div class="recipe-image">🥪</div>
+          <div class="recipe-info">
+            <h3>Club Sandwich</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="time">15 mins</span>
+            </div>
+            <p>Layered sandwich with deli meat, cheese, and fresh vegetables</p>
+            <a href="sandwich.html">View Recipe</a>
+          </div>
+        </div>
+
+        <div class="recipe-card">
+          <div class="recipe-image">🍝</div>
+          <div class="recipe-info">
+            <h3>Classic Tomato Pasta</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty medium">Medium</span>
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="time">25 mins</span>
+            </div>
+            <p>Traditional pasta with rich tomato sauce and fresh herbs</p>
+            <a href="pasta.html">View Recipe</a>
+          </div>
+        </div>
+
+        <div class="recipe-card">
+          <div class="recipe-image">🍗</div>
+          <div class="recipe-info">
+            <h3>Grilled Chicken</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty medium">Medium</span>
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="time">30 mins</span>
+            </div>
+            <p>Juicy grilled chicken with lemon herb marinade</p>
+            <a href="chicken.html">View Recipe</a>
+          </div>
         </div>
       </div>
 
       <h2 class="section-title">Popular Recipes</h2>
 
-      <div class="card">
-        <h3>Pancakes</h3>
-        <p>Fluffy breakfast favourite</p>
-        <a href="pancake.html">View Recipe</a>
-      </div>
+      <div class="popular-grid">
+        <div class="popular-card">
+          <div class="popular-image">🥞</div>
+          <div class="popular-info">
+            <h4>Fluffy Pancakes</h4>
+            <div class="popular-meta">
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="difficulty easy">Easy</span>
+            </div>
+          </div>
+        </div>
 
-      <div class="card">
-        <h3>Chicken Salad</h3>
-        <p>Healthy and light lunch</p>
-        <a href="salad.html">View Recipe</a>
+        <div class="popular-card">
+          <div class="popular-image">🍝</div>
+          <div class="popular-info">
+            <h4>Classic Tomato Pasta</h4>
+            <div class="popular-meta">
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="difficulty medium">Medium</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="popular-card">
+          <div class="popular-image">🍗</div>
+          <div class="popular-info">
+            <h4>Grilled Chicken</h4>
+            <div class="popular-meta">
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="difficulty medium">Medium</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -69,5 +177,160 @@
         <span>Add</span>
       </a>
     </nav>
+
+    <script>
+      // Recipe data
+      const recipes = [
+        {
+          name: "Fluffy Pancakes",
+          category: "breakfast",
+          difficulty: "easy",
+          rating: 5,
+          time: "15 mins",
+          emoji: "🥞",
+          description:
+            "Classic fluffy breakfast pancakes perfect for weekend mornings",
+          url: "pancake.html",
+        },
+        {
+          name: "Chicken Salad",
+          category: "lunch",
+          difficulty: "easy",
+          rating: 4,
+          time: "20 mins",
+          emoji: "🥗",
+          description:
+            "Fresh and healthy salad with grilled chicken and homemade dressing",
+          url: "salad.html",
+        },
+        {
+          name: "Classic Omelette",
+          category: "breakfast",
+          difficulty: "easy",
+          rating: 4,
+          time: "10 mins",
+          emoji: "🍳",
+          description:
+            "Fluffy French-style omelette with your favorite fillings",
+          url: "omelette.html",
+        },
+        {
+          name: "Club Sandwich",
+          category: "lunch",
+          difficulty: "easy",
+          rating: 5,
+          time: "15 mins",
+          emoji: "🥪",
+          description:
+            "Layered sandwich with deli meat, cheese, and fresh vegetables",
+          url: "sandwich.html",
+        },
+        {
+          name: "Classic Tomato Pasta",
+          category: "dinner",
+          difficulty: "medium",
+          rating: 5,
+          time: "25 mins",
+          emoji: "🍝",
+          description:
+            "Traditional pasta with rich tomato sauce and fresh herbs",
+          url: "pasta.html",
+        },
+        {
+          name: "Grilled Chicken",
+          category: "dinner",
+          difficulty: "medium",
+          rating: 4,
+          time: "30 mins",
+          emoji: "🍗",
+          description: "Juicy grilled chicken with lemon herb marinade",
+          url: "chicken.html",
+        },
+      ];
+
+      // Search functionality
+      function searchRecipes() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const recipeGrid = document.querySelector(".recipe-grid");
+
+        if (searchTerm === "") {
+          displayAllRecipes();
+          return;
+        }
+
+        const filteredRecipes = recipes.filter(
+          (recipe) =>
+            recipe.name.toLowerCase().includes(searchTerm) ||
+            recipe.category.toLowerCase().includes(searchTerm) ||
+            recipe.description.toLowerCase().includes(searchTerm),
+        );
+
+        displayRecipes(filteredRecipes, recipeGrid);
+      }
+
+      // Display all recipes
+      function displayAllRecipes() {
+        const recipeGrid = document.querySelector(".recipe-grid");
+        displayRecipes(recipes, recipeGrid);
+      }
+
+      // Display recipes in grid
+      function displayRecipes(recipesToDisplay, container) {
+        container.innerHTML = recipesToDisplay
+          .map(
+            (recipe) => `
+    <div class="recipe-card">
+      <div class="recipe-image">${recipe.emoji}</div>
+      <div class="recipe-info">
+        <h3>${recipe.name}</h3>
+        <div class="recipe-meta-inline">
+          <span class="difficulty ${recipe.difficulty}">${recipe.difficulty}</span>
+          <span class="rating">${"⭐".repeat(recipe.rating)}</span>
+          <span class="time">${recipe.time}</span>
+        </div>
+        <p>${recipe.description}</p>
+        <a href="${recipe.url}">View Recipe</a>
+      </div>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      // Search on Enter key
+      document
+        .getElementById("searchInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            searchRecipes();
+          }
+        });
+
+      // Load user-added recipes from localStorage
+      function loadUserRecipes() {
+        const userRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+        const allRecipes = [
+          ...recipes,
+          ...userRecipes.map((recipe, index) => ({
+            ...recipe,
+            emoji:
+              recipe.category === "breakfast"
+                ? "🍳"
+                : recipe.category === "lunch"
+                  ? "🥪"
+                  : "🍝",
+            url: `#user-recipe-${index}`,
+          })),
+        ];
+
+        const recipeGrid = document.querySelector(".recipe-grid");
+        displayRecipes(allRecipes, recipeGrid);
+      }
+
+      // Load user recipes on page load
+      window.addEventListener("load", loadUserRecipes);
+    </script>
   </body>
 </html>

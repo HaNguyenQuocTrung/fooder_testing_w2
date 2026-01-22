@@ -13,16 +13,76 @@
     </header>
 
     <section class="content">
-      <div class="card">
-        <h3>Chicken Salad</h3>
-        <p>Healthy and fresh lunch</p>
-        <a href="salad.html">View Recipe</a>
+      <div class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search lunch recipes..."
+            class="search-input"
+          />
+          <button class="search-btn" onclick="searchRecipes()">Search</button>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>Sandwich</h3>
-        <p>Quick lunch on the go</p>
-        <a href="sandwich.html">View Recipe</a>
+      <h2 class="section-title">All Lunch Recipes</h2>
+
+      <div class="recipe-grid">
+        <div class="recipe-card">
+          <div class="recipe-image">🥗</div>
+          <div class="recipe-info">
+            <h3>Chicken Salad</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="time">20 mins</span>
+            </div>
+            <p>
+              Fresh and healthy salad with grilled chicken and homemade dressing
+            </p>
+            <a href="salad.html">View Recipe</a>
+          </div>
+        </div>
+
+        <div class="recipe-card">
+          <div class="recipe-image">🥪</div>
+          <div class="recipe-info">
+            <h3>Club Sandwich</h3>
+            <div class="recipe-meta-inline">
+              <span class="difficulty easy">Easy</span>
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="time">15 mins</span>
+            </div>
+            <p>Layered sandwich with deli meat, cheese, and fresh vegetables</p>
+            <a href="sandwich.html">View Recipe</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Popular Lunch</h2>
+
+      <div class="popular-grid">
+        <div class="popular-card">
+          <div class="popular-image">🥗</div>
+          <div class="popular-info">
+            <h4>Chicken Salad</h4>
+            <div class="popular-meta">
+              <span class="rating">⭐⭐⭐⭐⭐</span>
+              <span class="difficulty easy">Easy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="popular-card">
+          <div class="popular-image">🥪</div>
+          <div class="popular-info">
+            <h4>Club Sandwich</h4>
+            <div class="popular-meta">
+              <span class="rating">⭐⭐⭐⭐⭐⭐</span>
+              <span class="difficulty easy">Easy</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -48,5 +108,92 @@
         <span>Add</span>
       </a>
     </nav>
+
+    <script>
+      // Lunch recipe data
+      const lunchRecipes = [
+        {
+          name: "Chicken Salad",
+          difficulty: "easy",
+          rating: 4,
+          time: "20 mins",
+          emoji: "🥗",
+          description:
+            "Fresh and healthy salad with grilled chicken and homemade dressing",
+          url: "salad.html",
+        },
+        {
+          name: "Club Sandwich",
+          difficulty: "easy",
+          rating: 5,
+          time: "15 mins",
+          emoji: "🥪",
+          description:
+            "Layered sandwich with deli meat, cheese, and fresh vegetables",
+          url: "sandwich.html",
+        },
+      ];
+
+      // Search functionality
+      function searchRecipes() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const recipeGrid = document.querySelector(".recipe-grid");
+
+        if (searchTerm === "") {
+          displayAllRecipes();
+          return;
+        }
+
+        const filteredRecipes = lunchRecipes.filter(
+          (recipe) =>
+            recipe.name.toLowerCase().includes(searchTerm) ||
+            recipe.description.toLowerCase().includes(searchTerm),
+        );
+
+        displayRecipes(filteredRecipes, recipeGrid);
+      }
+
+      // Display all recipes
+      function displayAllRecipes() {
+        const recipeGrid = document.querySelector(".recipe-grid");
+        displayRecipes(lunchRecipes, recipeGrid);
+      }
+
+      // Display recipes in grid
+      function displayRecipes(recipesToDisplay, container) {
+        container.innerHTML = recipesToDisplay
+          .map(
+            (recipe) => `
+    <div class="recipe-card">
+      <div class="recipe-image">${recipe.emoji}</div>
+      <div class="recipe-info">
+        <h3>${recipe.name}</h3>
+        <div class="recipe-meta-inline">
+          <span class="difficulty ${recipe.difficulty}">${recipe.difficulty}</span>
+          <span class="rating">${"⭐".repeat(recipe.rating)}</span>
+          <span class="time">${recipe.time}</span>
+        </div>
+        <p>${recipe.description}</p>
+        <a href="${recipe.url}">View Recipe</a>
+      </div>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      // Search on Enter key
+      document
+        .getElementById("searchInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            searchRecipes();
+          }
+        });
+
+      displayAllRecipes();
+    </script>
   </body>
 </html>
