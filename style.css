@@ -7,193 +7,216 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background: #f3f4f6;
   color: #1f2937;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Container for App Preview Look on Desktop */
+.app-container {
+  max-width: 100%;
+  margin: 0 auto;
+  background: #f3f4f6;
   min-height: 100vh;
 }
 
 /* =========================
-   APP HEADER (TOP BAR)
+   APP HEADER
 ========================= */
 header {
   background: linear-gradient(135deg, #ff7a18, #ffb347);
   color: #ffffff;
-  padding: 22px 16px;
+  padding: 30px 20px;
   text-align: center;
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
 }
 
 header h1 {
-  font-size: 1.7rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 header p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin-top: 6px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 /* =========================
-   NAVIGATION (TAB BAR)
+   NAVIGATION (APP BAR)
 ========================= */
 nav {
   position: sticky;
   top: 0;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
-  padding: 12px 0;
-  margin-top: -12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-  z-index: 10;
+  padding: 14px 0;
+  margin: -15px 16px 0; /* Pulled up slightly */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 100;
 }
 
 nav a {
   text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   color: #ff7a18;
-  padding: 6px 10px;
+  padding: 8px 16px;
   border-radius: 10px;
+  transition: background 0.2s;
 }
 
-nav a:active {
-  background: rgba(255,122,24,0.15);
+nav a:hover, nav a:active {
+  background: rgba(255,122,24,0.1);
 }
 
 /* =========================
    MAIN CONTENT
 ========================= */
 .content {
-  padding: 20px 16px 90px;
+  padding: 20px 20px 100px;
 }
 
-/* =========================
-   SECTION TITLES
-========================= */
 .section-title {
-  margin-top: 26px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  margin: 24px 0 16px;
+  font-size: 1.25rem;
+  font-weight: 800;
 }
 
 /* =========================
-   HOME GRID (MEAL CHOICES)
+   HOME GRID (RESPONSIVE)
 ========================= */
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 16px;
+  /* 2 columns on small mobile, 3 on larger */
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 16px;
 }
 
 .home-card {
   background: #ffffff;
-  border-radius: 18px;
-  padding: 16px 10px;
+  border-radius: 20px;
+  padding: 20px 10px;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
-  transition: transform 0.15s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
 }
 
 .home-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
 }
 
 .home-card span {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
 .home-card a {
   text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: #1f2937;
 }
 
 /* =========================
-   RECIPE CARDS (ALL PAGES)
+   RECIPE CARDS
 ========================= */
 .card {
   background: #ffffff;
-  border-radius: 18px;
-  padding: 16px;
-  margin-top: 14px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.04);
 }
 
 .card h3 {
-  font-size: 1.05rem;
-  margin-bottom: 6px;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
 }
 
 .card p {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin-bottom: 16px;
 }
 
 .card a {
   display: inline-block;
   text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   color: #ffffff;
   background: #ff7a18;
-  padding: 8px 14px;
-  border-radius: 999px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: opacity 0.2s;
+}
+
+.card a:hover {
+  opacity: 0.9;
 }
 
 /* =========================
-   RECIPE DETAIL PAGE
+   DETAIL PAGE ELEMENTS
 ========================= */
-.content h2 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 1.05rem;
-}
-
-ul,
-ol {
+ul, ol {
   padding-left: 20px;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 li {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 /* =========================
-   TABLET RESPONSIVE
+   RESPONSIVE QUERIES
 ========================= */
-@media (min-width: 600px) {
-  header h1 {git push origin master
 
-  }
-
-  .content {
-    padding: 24px 32px 90px;
-  }
-
+/* Medium Mobile & Up (Switch to 3 columns) */
+@media (min-width: 400px) {
   .home-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* =========================
-   DESKTOP (APP PREVIEW)
-========================= */
-@media (min-width: 900px) {
+/* Tablet & Desktop Layout */
+@media (min-width: 768px) {
   body {
-    max-width: 420px;
-    margin: auto;
-    background: #e5e7eb;
+    background: #d1d5db; /* Grey background like a real app preview */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+  }
+
+  .app-container {
+    max-width: 414px; /* iPhone 13 Pro Max width */
+    height: 850px; /* Fixed height for preview */
+    overflow-y: auto;
+    border-radius: 40px;
+    border: 8px solid #1f2937; /* Phone Frame */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Hide scrollbar for a cleaner app look */
+  .app-container::-webkit-scrollbar {
+    width: 0px;
   }
 }
