@@ -279,24 +279,61 @@
       // Display recipes in grid
       function displayRecipes(recipesToDisplay, container) {
         container.innerHTML = recipesToDisplay
-          .map(
-            (recipe) => `
-    <div class="recipe-card">
-      <div class="recipe-image">${recipe.emoji}</div>
-      <div class="recipe-info">
-        <h3>${recipe.name}</h3>
-        <div class="recipe-meta-inline">
-          <span class="difficulty ${recipe.difficulty}">${recipe.difficulty}</span>
-          <span class="rating">${"⭐".repeat(recipe.rating)}</span>
-          <span class="time">${recipe.time}</span>
-        </div>
-        <p>${recipe.description}</p>
-        <a href="${recipe.url}">View Recipe</a>
-      </div>
-    </div>
-  `,
-          )
+          .map((recipe) => {
+            const isUserRecipe = recipe.id && recipe.id.startsWith("recipe_");
+            const recipeUrl = isUserRecipe
+              ? `recipe-detail.html?id=${recipe.id}`
+              : recipe.url;
+
+            return `
+            <div class="recipe-card">
+              <div class="recipe-image">${recipe.emoji}</div>
+              <div class="recipe-info">
+                <h3>${recipe.name}</h3>
+                <div class="recipe-meta-inline">
+                  <span class="difficulty ${recipe.difficulty}">${
+                    recipe.difficulty
+                  }</span>
+                  <span class="rating">${"⭐".repeat(recipe.rating)}</span>
+                  <span class="time">${recipe.time}</span>
+                </div>
+                <p>${recipe.description}</p>
+                <div class="recipe-actions">
+                  ${
+                    isUserRecipe
+                      ? `
+                    <button class="edit-btn" onclick="editUserRecipe('${
+                      recipe.id
+                    }')">✏️ Edit</button>
+                    <button class="delete-btn" onclick="deleteUserRecipe('${
+                      recipe.id
+                    }')">🗑️ Delete</button>
+                  `
+                      : ""
+                  }
+                  <a href="${recipeUrl}" class="view-btn">👁️ View Recipe</a>
+                </div>
+              </div>
+            </div>
+          `;
+          })
           .join("");
+      }
+
+      // Edit user recipe
+      function editUserRecipe(recipeId) {
+        window.location.href = `add.html?edit=${recipeId}`;
+      }
+
+      // Delete user recipe
+      function deleteUserRecipe(recipeId) {
+        if (confirm("Are you sure you want to delete this recipe?")) {
+          const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+          const updatedRecipes = recipes.filter((r) => r.id !== recipeId);
+          localStorage.setItem("recipes", JSON.stringify(updatedRecipes));
+          loadUserRecipes();
+          alert("Recipe deleted successfully! 🗑️");
+        }
       }
 
       // Search on Enter key
@@ -311,9 +348,15 @@
       // Load user-added recipes from localStorage
       function loadUserRecipes() {
         const userRecipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+        // Filter out any fish recipes if they exist
+        const filteredUserRecipes = userRecipes.filter(
+          (recipe) =>
+            !recipe.name.toLowerCase().includes("fish") &&
+            !recipe.name.toLowerCase().includes("fried"),
+        );
         const allRecipes = [
           ...recipes,
-          ...userRecipes.map((recipe, index) => ({
+          ...filteredUserRecipes.map((recipe, index) => ({
             ...recipe,
             emoji:
               recipe.category === "breakfast"
@@ -321,7 +364,7 @@
                 : recipe.category === "lunch"
                   ? "🥪"
                   : "🍝",
-            url: `#user-recipe-${index}`,
+            url: `recipe-detail.html?id=${recipe.id}`,
           })),
         ];
 

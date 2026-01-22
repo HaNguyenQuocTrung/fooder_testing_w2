@@ -158,26 +158,33 @@
       // Display all recipes
       function displayAllRecipes() {
         const recipeGrid = document.querySelector(".recipe-grid");
-        displayRecipes([], recipeGrid);
+        displayRecipes(null, recipeGrid);
       }
 
       // Display recipes in grid
       function displayRecipes(recipesToDisplay, container) {
         const allRecipes = [...breakfastRecipes, ...getUserRecipes()];
-        const filteredRecipes = recipesToDisplay.length
-          ? recipesToDisplay
-          : allRecipes.filter((r) => r.category === "breakfast");
+        const filteredRecipes =
+          recipesToDisplay && recipesToDisplay.length > 0
+            ? recipesToDisplay
+            : allRecipes.filter((r) => r.category === "breakfast");
 
         container.innerHTML = filteredRecipes
           .map((recipe) => {
             const isUserRecipe = recipe.id && recipe.id.startsWith("recipe_");
+            const recipeUrl = isUserRecipe
+              ? `recipe-detail.html?id=${recipe.id}`
+              : recipe.url;
+
             return `
             <div class="recipe-card">
               <div class="recipe-image">${recipe.emoji || "🍳"}</div>
               <div class="recipe-info">
                 <h3>${recipe.name}</h3>
                 <div class="recipe-meta-inline">
-                  <span class="difficulty ${recipe.difficulty || "easy"}">${recipe.difficulty || "Easy"}</span>
+                  <span class="difficulty ${recipe.difficulty || "easy"}">${
+                    recipe.difficulty || "Easy"
+                  }</span>
                   <span class="rating">${"⭐".repeat(recipe.rating || 4)}</span>
                   <span class="time">${recipe.prepTime || "15 mins"}</span>
                 </div>
@@ -191,7 +198,7 @@
                   `
                       : ""
                   }
-                  <a href="${recipe.url}" class="view-btn">👁️ View Recipe</a>
+                  <a href="${recipeUrl}" class="view-btn">👁️ View Recipe</a>
                 </div>
               </div>
             </div>
@@ -202,7 +209,13 @@
 
       // Get user recipes from localStorage
       function getUserRecipes() {
-        return JSON.parse(localStorage.getItem("recipes") || "[]");
+        const recipes = JSON.parse(localStorage.getItem("recipes") || "[]");
+        // Filter out any fish recipes if they exist
+        return recipes.filter(
+          (recipe) =>
+            !recipe.name.toLowerCase().includes("fish") &&
+            !recipe.name.toLowerCase().includes("fried"),
+        );
       }
 
       // Edit user recipe
